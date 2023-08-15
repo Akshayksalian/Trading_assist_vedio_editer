@@ -3,6 +3,7 @@ import os
 import cv2
 import pyrebase
 from moviepy.editor import *
+import time
 
 app = Flask(__name__)
 
@@ -44,9 +45,31 @@ def hello_world():
     clips.append(clip2)
     audio_clip = AudioFileClip("https://samplelib.com/lib/preview/mp3/sample-12s.mp3")
 
+    config = {
+        "apiKey": "AIzaSyDsArUkk0aNSa6oi62k3dWOyl1IQqYvAzM",
+        "authDomain": "trading-assist-news.firebaseapp.com",
+        "databaseURL": "https://trading-assist-news-default-rtdb.firebaseio.com",
+        "projectId": "trading-assist-news",
+        "storageBucket": "trading-assist-news.appspot.com",
+        "messagingSenderId": "918373799401",
+        "appId": "1:918373799401:web:7f63a2f1aeca4dc6f4a778",
+        "measurementId": "G-S6L423Z30K"
+    }
+
+    firebase = pyrebase.initialize_app(config)
+    storage = firebase.storage()
+
+    # auth = firebase.auth
+    # email = "akshayksalian@gmail.com"
+    # password = "Akshay@8544"
+    # user = auth.get_user_by_phone_number(email)
+    # print(user)
+    # url = storage.child(new).get_url(user['idToken']
     
     VideoClip = concatenate_videoclips(clips,method='compose').set_audio(audio_clip)
-    VideoClip.write_videofile("video.mp4",fps=24,remove_temp=True,codec="libx264",audio_codec="aac")
+    VideoClip.write_videofile("gideo.mp4",fps=24,remove_temp=True,codec="libx264",audio_codec="aac")
+    storage.child("images/newVedio.mp4").put("D:\Workspaces\StartUps\Flask\gideo.mp4")
+    os.remove("D:\Workspaces\StartUps\Flask\gideo.mp4")
     return "moviePy created vedio"
 
 if __name__ == "__main__":
